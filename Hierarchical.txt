@@ -1,0 +1,19 @@
+##heirarchical clustering
+
+
+> set.seed(2835)
+> # draw a sample of 40 records from the iris data, so that the
+> # clustering plot will not be over crowded
+> idx <- sample(1:dim(iris)[1], 40)
+> irisSample <- iris[idx, ]
+> # remove class label
+> irisSample$Species <- NULL
+> # hierarchical clustering
+> hc <- hclust(dist(irisSample), method = "ave")
+> # plot clusters
+> plot(hc, hang = -1, labels = iris$Species[idx])
+> # cut tree into 3 clusters
+> rect.hclust(hc, k = 3)
+> # get cluster IDs
+> groups <- cutree(hc, k = 3)
+
