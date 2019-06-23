@@ -1,0 +1,43 @@
+#Apriori
+
+library(arules)
+#generationg rules
+rules.all<-apriori(titanic.raw)
+#printing rules
+inspect(rules.all)
+#verbose=F means it does not print anything when executed.....
+#verbose=T prints all details like support ,confidence etc....
+#conditions for rhs anad lhs
+rules<-apriori(titanic.raw,control=list(verbose=F),
+               parameter=list(minlen=2,supp=0.005,conf=0.8),
+               appearance=list(rhs=c("Survived=Yes","Survived=No"),default="lhs"))
+inspect(rules)
+
+
+#eclat
+library(arules)
+#generationg rules
+rules.all<-eclat(titanic.raw)
+#printing rules
+inspect(rules.all)
+#verbose=F means it does not print anything when executed.....
+#verbose=T prints all details like support ,confidence etc....
+rules<-eclat(titanic.raw,control=list(verbose=F),
+               parameter=list(minlen=2,supp=0.005))
+inspect(rules)
+
+
+
+#FP GROWTH
+
+library("rJava")
+library("rCBA")
+data("iris")
+train <- sapply(iris,as.factor)
+train <- data.frame(train, check.names=FALSE)
+txns <- as(train,"transactions")
+rules = rCBA::fpgrowth(txns, support=0.03, confidence=0.03,maxLength=2, consequent="Species", parallel=FALSE)
+inspect(rules)
+
+
+
